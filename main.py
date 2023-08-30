@@ -21,12 +21,21 @@ class Member:
         self.level = level
         self.borrowed_books = []
 
-    # TODO : implement member method
     def borrow_book(self, book):
-        pass
+        if book.is_available and self.level == book.level:
+            self.borrowed_books.append(book)
+            book.is_available = False
+            return True
+        else:
+            return False
 
     def return_book(self, book):
-        pass
+        if book in self.borrowed_books:
+            self.borrowed_books.remove(book)
+            book.is_available = True
+            return True
+        else:
+            return False
 
 
 class Library:
@@ -34,24 +43,30 @@ class Library:
         self.books = []
         self.members = []
 
-    # TODO : implement Library methods
     def add_book(self, book):
-        pass
+        self.books.append(book)
 
     def add_member(self, member):
-        pass
+        self.members.append(member)
 
     def display_books(self):
-        pass
+        for book in self.books:
+            print(f"Book ID: {book.book_id}, Title: {book.title}, Author: {book.author}, Level: {book.level}, Availability: {'Available' if book.is_available else 'Not Available'}")
 
     def find_book(self, book_id):
-        pass
+        for book in self.books:
+            if book.book_id == book_id:
+                return book
+        return None
 
     def display_members(self):
-        pass
+        for member in self.members:
+            print(f"Member ID: {member.member_id}, Name: {member.name}, Email: {member.email}, Level: {member.level}")
 
     def find_member(self, member_id):
-        pass
+        for member in self.members:
+            if member.member_id == member_id:
+                return member
 
 
 library = Library()
@@ -69,4 +84,47 @@ while True:
 
     choice = input("Enter your choice: ")
 
-# TODO : implement the menu
+    if choice == '1':
+        name = input("Enter Member Name: ")
+        email = input("Enter Member Email: ")
+        level = input("Enter Member Level: ")
+        member = Member(name, email, level)
+        library.add_member(member)
+        print("Member added successfully.")
+
+    elif choice == '2':
+        # TODO: Implement Edit Member option
+        pass
+
+    elif choice == '3':
+        library.display_members()
+
+    elif choice == '4':
+        # TODO: Implement Delete Member option
+        pass
+
+    elif choice == '5':
+        title = input("Enter Book Title: ")
+        author = input("Enter Book Author: ")
+        level = input("Enter Book Level: ")
+        book = Book(title, author, level)
+        library.add_book(book)
+        print("Book added successfully.")
+
+    elif choice == '6':
+        library.display_books()
+
+    elif choice == '7':
+        # TODO: Implement Borrow Book option
+        pass
+
+    elif choice == '8':
+        # TODO: Implement Return Book option
+        pass
+
+    elif choice == '9':
+        print("Exiting program.")
+        break
+
+    else:
+        print("Invalid choice. Please select a valid option.")
