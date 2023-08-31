@@ -1,3 +1,5 @@
+#The final project of Ahmed Dawas
+print(' The Final Project of Ahmed Dawas '.center(100,'-'))
 class Book:
     id_counter = 0
 
@@ -50,8 +52,9 @@ class Library:
         self.members.append(member)
 
     def display_books(self):
+        print(f"ID    |    Title    |    Author    |    Level |    Availability    ")
         for book in self.books:
-            print(f"Book ID: {book.book_id}, Title: {book.title}, Author: {book.author}, Level: {book.level}, Availability: {'Available' if book.is_available else 'Not Available'}")
+            print(f"{book.book_id}    |    {book.title}    |    Author: {book.author}    |    Level: {book.level}    |    {'Available' if book.is_available else 'Not Available'}")
 
     def find_book(self, book_id):
         for book in self.books:
@@ -60,8 +63,9 @@ class Library:
         return None
 
     def display_members(self):
+        print(f"ID  |   Name    |   Email   |   Level   ")
         for member in self.members:
-            print(f"Member ID: {member.member_id}, Name: {member.name}, Email: {member.email}, Level: {member.level}")
+            print(f"{member.member_id}  |   {member.name}   |   {member.email}  |   {member.level}")
 
     def find_member(self, member_id):
         for member in self.members:
@@ -70,7 +74,7 @@ class Library:
 
 
 library = Library()
-print(' Welcome to the Library System '.center(100,'-'))
+print(' Welcome to The Library System '.center(100,'-'))
 while True:
     print("1. Add Member")
     print("2. Edit Member")
@@ -85,28 +89,44 @@ while True:
     choice = input("Enter your choice: ")
 
     if choice == '1':
-        name = input("Enter Member Name: ")
-        email = input("Enter Member Email: ")
-        level = input("Enter Member Level: ")
+        name = input("Enter Member Name : ")
+        email = input("Enter Member Email : ")
+        level = input("Enter Member Level (A,B,C) : ")
         member = Member(name, email, level)
         library.add_member(member)
         print("Member added successfully.")
 
     elif choice == '2':
-        # TODO: Implement Edit Member option
-        pass
+        member_id = input("Enter Member ID to edit: ")
+        member = library.find_member(member_id)
+        if member:
+            new_name = input("Enter new Name : ")
+            new_email = input("Enter new Email : ")
+            new_level = input("Enter new Level (A,B,C) : ")
+            member.name = new_name
+            member.email = new_email
+            member.level = new_level
+            print("Member information updated successfully.")
+        else:
+            print("Member not found.")
 
     elif choice == '3':
         library.display_members()
 
     elif choice == '4':
-        # TODO: Implement Delete Member option
-        pass
+        member_id = input("Enter Member ID to delete: ")
+        member_id = int(member_id)
+        member = library.find_member(member_id)
+        if member:
+            library.members.remove(member)
+            print("Member deleted successfully.")
+        else:
+            print("Member not found.")
 
     elif choice == '5':
-        title = input("Enter Book Title: ")
-        author = input("Enter Book Author: ")
-        level = input("Enter Book Level: ")
+        title = input("Enter Book Title : ")
+        author = input("Enter Book Author : ")
+        level = input("Enter Book Level (A,B,C) : ")
         book = Book(title, author, level)
         library.add_book(book)
         print("Book added successfully.")
@@ -115,12 +135,28 @@ while True:
         library.display_books()
 
     elif choice == '7':
-        # TODO: Implement Borrow Book option
-        pass
+        member_id = input("Enter Member ID: ")
+        book_id = input("Enter Book ID: ")
+        member = library.find_member(member_id)
+        book = library.find_book(book_id)
+        if member and book:
+            if member.borrow_book(book):
+                print("Book borrowed successfully.")
+            else:
+                print("Book cannot be borrowed.")
 
     elif choice == '8':
-        # TODO: Implement Return Book option
-        pass
+        member_id = input("Enter Member ID: ")
+        member_id = int(member_id)
+        book_id = input("Enter Book ID: ")
+        book_id = int(book_id)
+        member = library.find_member(member_id)
+        book = library.find_book(book_id)
+        if member and book:
+            if member.return_book(book):
+                print("Book returned successfully.")
+            else:
+                print("Book was not borrowed by this member.")
 
     elif choice == '9':
         print("Exiting program.")
