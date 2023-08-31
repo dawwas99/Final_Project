@@ -1,5 +1,6 @@
 #The final project of Ahmed Dawas
 print(' The Final Project of Ahmed Dawas '.center(100,'-'))
+print(' Thank you Gaza Sky Geeks and Eng. Ghydaa '.center(100,'-'))
 class Book:
     id_counter = 0
 
